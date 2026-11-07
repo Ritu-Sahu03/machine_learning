@@ -1,6 +1,6 @@
 # Breast Cancer Diagnosis - Classifier App
 
-ML Assignment2. Five classification models trained on a UCI dataset and served
+ML Assignment 2 (NSP1). Five classification models trained on a UCI dataset and served
 through a Streamlit app.
 
 ## a. Problem statement
@@ -35,7 +35,7 @@ affect them. The 143-row test split is saved as `test_data.csv`.
 ## c. GitHub repository link
 
 ```
-https://github.com/Ritu-Sahu03/machine_learning
+https://github.com/Ritu-Sahu03/machine_learning.git
 ```
 
 Live app: `https://machinelearning-classification-model.streamlit.app`
@@ -71,6 +71,17 @@ project-folder/
 | Support Vector Machine | 0.9790 | 0.9966 | 0.9888 | 0.9778 | 0.9832 | 0.9553 |
 
 Positive class is `1 = benign`.
+
+### Observations
+
+| ML Model Name | Observation about model performance |
+|---|---|
+| Logistic Regression | Did much better than I expected for a linear model - 97.9% accuracy and the joint-best recall. This suggests the two classes are almost linearly separable once the features are standardised. It is also the easiest model to explain. |
+| Decision Tree | Weakest of the five (93.7% accuracy, 0.9457 AUC). A single tree splits on one feature at a time, so it cannot capture the diagonal boundary the other models find. Its AUC is low because a depth-5 tree only produces a few distinct probability values. |
+| KNN | Close behind the leaders at 97.2%. Distance weighting helps and `k=9` smooths out noise. Its AUC is slightly lower because the probabilities can only take 9 levels. KNN depends completely on scaling here - `area` goes up to ~2500 while `smoothness` is around 0.1. |
+| Naive Bayes | Lowest accuracy (91.6%) but still a high AUC of 0.9820. This happens because the independence assumption is clearly violated (radius, perimeter and area carry nearly the same information), which makes the probabilities overconfident even though the ranking of samples stays good. |
+| Support Vector Machine | Best AUC (0.9966), precision (0.9888) and MCC (0.9553). The RBF kernel handles the slight curvature in the boundary that the linear model misses, and the margin keeps it from overfitting the 426 training rows. |
+| Overall winner | **Support Vector Machine.** It leads on MCC and AUC, which are the most trustworthy metrics for this slightly imbalanced data. Logistic Regression is a very close second and would be my pick if interpretability mattered more. |
 
 ## How to run
 
